@@ -1,0 +1,29 @@
+<div class="response-page-container">
+  <!-- Header with back button -->
+  <div class="page-header">
+    <button class="back-button" (click)="goBack()">
+      ← Back to Upload
+    </button>
+    <h1 class="page-title"> Model Decision</h1>
+  </div>
+
+  <!-- Response content -->
+  <div class="response-content" *ngIf="response">
+    <app-media-response 
+      [response]="response"
+      [mediaType]="mediaType"
+      [fileName]="fileName">
+    </app-media-response>
+  </div>
+
+  <!-- Loading/Error state -->
+  <div class="error-state" *ngIf="!response">
+    <div class="error-content">
+      <h2>No Response Data Found</h2>
+      <p>It looks like there's no response data to display. Please go back and upload a file first.</p>
+      <button class="primary-button" (click)="goBack()">
+        Go Back to Upload
+      </button>
+    </div>
+  </div>
+</div>

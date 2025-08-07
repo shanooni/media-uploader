@@ -1,0 +1,21 @@
+<div class="response-container">
+  <div class="response-header">
+    <h3 class="response-title">✅ Prediction Response for {{ mediaType || 'File' }}:</h3>
+    <div *ngIf="fileName" class="file-name-display">
+      📁 {{ fileName }}
+    </div>
+  </div>
+  
+  <div class="response-content-wrapper">
+    <pre class="response-content">{{ response | json }}</pre>
+  </div>
+  
+  <div class="response-actions">
+    <button class="action-button download-btn" (click)="downloadResponse()">
+      📥 Download Results
+    </button>
+    <button class="action-button copy-btn" (click)="copyToClipboard()">
+      📋 Copy Response
+    </button>
+  </div>
+</div>

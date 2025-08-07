@@ -1,0 +1,89 @@
+<div class="upload-container">
+  <h2 class="upload-title">📱 Media Upload Studio</h2>
+
+  <!-- ✅ Add ngForm here -->
+  <form #uploadForm="ngForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <!-- Media Type Selection -->
+    <div class="file-input-group">
+      <label class="file-label">Choose your media type:</label>
+      <div class="media-selection">
+        <div 
+          class="media-type-card" 
+          [class.active]="selectedMediaType === 'image'"
+          (click)="selectMediaType('image')"
+        >
+          <div class="media-icon">🖼️</div>
+          <span class="media-label">Images</span>
+        </div>
+        <div 
+          class="media-type-card" 
+          [class.active]="selectedMediaType === 'video'"
+          (click)="selectMediaType('video')"
+        >
+          <div class="media-icon">🎬</div>
+          <span class="media-label">Videos</span>
+        </div>
+        <div 
+          class="media-type-card" 
+          [class.active]="selectedMediaType === 'audio'"
+          (click)="selectMediaType('audio')"
+        >
+          <div class="media-icon">🎵</div>
+          <span class="media-label">Audio</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Drop Zone -->
+    <div 
+      *ngIf="selectedMediaType"
+      class="file-drop-zone"
+      (click)="fileInput.click()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+      [class.dragover]="isDragOver"
+    >
+      <div class="drop-zone-content">
+        <div class="drop-zone-icon">
+          {{ getDropZoneIcon() }}
+        </div>
+        <div class="drop-zone-text">
+          Click here to select your {{ selectedMediaType }} file
+        </div>
+        <div class="drop-zone-subtext">
+          or click to download your files
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden File Input -->
+    <input
+      #fileInput
+      class="file-input"
+      type="file"
+      [accept]="getAcceptedTypes()"
+      (change)="onFileChange($event)"
+    />
+
+    <!-- Selected File Info -->
+    <div *ngIf="selectedFile" class="file-info">
+      <span> File details </span>
+      <span class="file-name">{{ selectedFile.name }}</span>
+      Size: {{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB
+      <br>
+      Type: {{ getFileTypeLabel() }}
+    </div>
+
+    <!-- Upload Button -->
+    <button 
+      class="upload-button" 
+      type="submit"
+      [disabled]="!selectedFile || isUploading"
+    >
+      <span *ngIf="!isUploading">🚀 Predict {{ selectedMediaType || 'File' }}</span>
+      <span *ngIf="isUploading">⏳ Processing...</span>
+    </button>
+  </form>
+
+</div>
